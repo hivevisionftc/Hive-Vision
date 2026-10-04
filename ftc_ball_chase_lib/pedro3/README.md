@@ -89,6 +89,32 @@ Loop-driven users can instead `start()` / `update()` / `abort()` / `isDone()`.
 | Drive/turn/coast gains | `final/BallChaseController.java` / `final/BallChaseFollower.java` | All `public static`, tune in place or via a config system. |
 | `HFOV_DEG`/`VFOV_DEG`, pod/offset geometry | `final/BallChaseFollower.java` | Camera FOV and mount offsets for field projection. |
 
+## Handing this to a beta tester
+
+Don't tell them to copy this folder. The root-level `BallChaseOpMode.java` and
+`older/BallChaseOpMode.java` share an FQCN, so a straight copy of the tree is a
+duplicate-class error. Use the drop script instead:
+
+```powershell
+.\install_beta.cmd  C:\path\to\their-FTC-project
+```
+
+That copies exactly the 16 sources a tester needs into
+`<project>\TeamCode\src\main\java\org\firstinspires\ftc\teamcode\` (correct
+package dirs, `pedroPathing\`, `wrapper\`, `tests\`) plus this repo's
+`tests/README.md` as `PEDRO3_BETA_README.md` at the project root. Their steps:
+
+1. `implementation 'com.pedropathing:revhub:3.0.1'` in `TeamCode/build.gradle`
+   (Maven Central — already in the FTC plugin's repo list).
+2. Edit `teamcode/pedroPathing/Constants.java` for their robot: hardware names,
+   pod offsets, ticks-to-inches, and the `MAX_FORWARD_VELOCITY` /
+   `MAX_STRAFE_VELOCITY` limits. These ship as placeholders.
+3. Build, then run **`Pedro3 Lib Self-Test`** from the `Hive Vision` group.
+   `tests/README.md` (copied to `PEDRO3_BETA_README.md`) is their reference.
+
+Verified: the installed 16-file drop compiles and passes 223/0/1 against the
+*published* `revhub:3.0.1` / `core:3.0.1` jars from Maven Central.
+
 ## Self-test
 
 `tests/` holds `Pedro3LibSelfTest`, an OpMode plus desktop program that checks
@@ -129,16 +155,25 @@ javac -cp "RobotCore-12.0.0.jar;Hardware-12.0.0.jar;revhub-3.0.1.jar;tuning-1.0.
   final\*.java older\*.java wrapper\*.java tests\*.java older\pedroPathing\Constants.java
 ```
 
-> **Note on the staged Pedro 3 jars.** At the time of this migration,
-> `com.pedropathing:revhub` / `:tuning` were **not yet published** to
-> `https://repo.dairy.foundation/releases/` (the documented repo returns 404 for
-> `com/pedropathing/...`, and its directory listing only contains
-> `com/{acmerobotics,bylazar,qualcomm}`, `dev/frozenmilk`, `org/{...}`).
-> The `pedro3_core.jar` / `pedro3_revhub.jar` under `%LOCALAPPDATA%\ftc_compile`
-> were therefore **built from the official `v3.0.1` source tag**
-> (`github.com/Pedro-Pathing/PedroPathing`, modules `:core` and `:revhub`),
-> compiling cleanly against FTC SDK 12.0.0. When the artifacts are published,
-> switch the Gradle coordinates above in and drop the local jars.
+> **Pedro 3 coordinates.** Add this to `TeamCode/build.gradle`:
+>
+> ```gradle
+> implementation 'com.pedropathing:revhub:3.0.1'
+> ```
+>
+> `revhub` and its `core` dependency are published on **Maven Central**, which
+> the FTC Gradle plugin already includes, so no extra repository block is
+> needed. `com.pedropathing:tuning:1.0.1` is *not* required — `older/pedroPathing/Constants.java`
+> in this tree is a self-contained copy of the settings you would otherwise
+> generate with the tuner.
+>
+> The jars this repo's `compile_check.cmd` uses are built from the official
+> `v3.0.1` source tag, but the self-test has also been verified to compile and
+> pass against the jars downloaded from Central, so either is fine.
+>
+> (Older note, kept for history: `revhub` was not on
+> `https://repo.dairy.foundation/releases/` when this port was written. That
+> repo no longer serves these artifacts; use Central.)
 
 ## `older/`
 
