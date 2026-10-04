@@ -10,6 +10,10 @@ FTC SDK **12.x** and **Pedro Pathing 3.x**.
 
 - **`final/`** — the ship-ready code. Copy these four `.java` files straight
   into your `org.firstinspires.ftc.teamcode` package:
+- **`wrapper/`** — `MecanumWrangler` / `BallWrangler`, the higher-level verb and
+  step-chain API. Not needed if you only use `BallChaseController`.
+- **`tests/`** — `Pedro3LibSelfTest`, the self-test OpMode plus its desktop
+  runner. Deploy it too; see the Self-test section below.
 - **`older/`** — superseded/experimental set (BallMath reference, BallHunter,
   the migrated Pedro 3.x demos). Keeping it out of the active code path; see the
   notes there.
@@ -85,9 +89,27 @@ Loop-driven users can instead `start()` / `update()` / `abort()` / `isDone()`.
 | Drive/turn/coast gains | `final/BallChaseController.java` / `final/BallChaseFollower.java` | All `public static`, tune in place or via a config system. |
 | `HFOV_DEG`/`VFOV_DEG`, pod/offset geometry | `final/BallChaseFollower.java` | Camera FOV and mount offsets for field projection. |
 
+## Self-test
+
+`tests/` holds `Pedro3LibSelfTest`, an OpMode plus desktop program that checks
+every public function in this tree against a mock drivetrain and scripted
+detections. Sections S0–S3 need no hardware and run headlessly:
+
+```powershell
+.\compile_check.cmd -runselftest   # compile everything + run the self-test
+```
+
+Section S4 covers Pedro follower initialization, odometry and the OpMode
+end-to-end paths; it requires the robot (lift it or block the wheels) and only
+runs when A is held during INIT. Before running it, edit
+`older/pedroPathing/Constants.java` for your robot — the pod offsets and
+ticks-to-inches are placeholders, and S4 refuses to path until a measured burst
+proves the odometry scale is sane. See [`tests/README.md`](tests/README.md) for
+the full section list, the safety interlocks, and the pinned-down behaviours.
+
 ## Compile check (structure verification)
 
-The whole tree (`final/` + `wrapper/` + `older/`) is verified to compile with `javac`
+The whole tree (`final/` + `wrapper/` + `older/` + `tests/`) is verified to compile with `javac`
 against the official jars (FTC SDK 12.0.0 + Pedro Pathing 3.x). On this
 dev box the jars and a JDK are staged under `%LOCALAPPDATA%\ftc_compile`, so
 just run:
@@ -104,7 +126,7 @@ For another machine, build the classpath from these coordinates
 
 ```powershell
 javac -cp "RobotCore-12.0.0.jar;Hardware-12.0.0.jar;revhub-3.0.1.jar;tuning-1.0.1.jar" -d out `
-  final\*.java older\*.java wrapper\*.java older\pedroPathing\Constants.java
+  final\*.java older\*.java wrapper\*.java tests\*.java older\pedroPathing\Constants.java
 ```
 
 > **Note on the staged Pedro 3 jars.** At the time of this migration,

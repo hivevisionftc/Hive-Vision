@@ -1,6 +1,7 @@
 @echo off
-rem Compile verification for final/ + older/ + wrapper/ against FTC SDK 12.0.0 + Pedro Pathing 3.x.
-rem Uses the local JDK and the Maven/AAR-extracted jars staged in ftc_compile.
+rem Compile verification for final/ + older/ + wrapper/ + tests/ against FTC SDK
+rem 12.0.0 + Pedro Pathing 3.x. Uses the local JDK and the Maven/AAR-extracted
+rem jars staged in ftc_compile.
 rem
 rem The Pedro 3 jars here were BUILT FROM SOURCE from the official v3.0.1 tag
 rem (github.com/Pedro-Pathing/PedroPathing, modules :core and :revhub), because
@@ -18,6 +19,8 @@ rem
 rem Usage: compile_check.cmd              (compile only)
 rem         compile_check.cmd -runmath    (also run the BallMath Java self-test)
 rem         compile_check.cmd -runwrapper (also run the wrapper logic self-test)
+rem         compile_check.cmd -runselftest (compile + run the FULL library
+rem                             self-test headlessly, S0-S3, no hardware needed)
 
 setlocal enabledelayedexpansion
 set ROOT=%~dp0
@@ -37,6 +40,7 @@ set SRC=
 for /r "%ROOT%final" %%f in (*.java) do set SRC=!SRC! "%%f"
 for /r "%ROOT%older" %%f in (*.java) do set SRC=!SRC! "%%f"
 for /r "%ROOT%wrapper" %%f in (*.java) do set SRC=!SRC! "%%f"
+for /r "%ROOT%tests" %%f in (*.java) do set SRC=!SRC! "%%f"
 
 "%JDK%\javac.exe" -nowarn -encoding UTF-8 -cp "%CP%" -d "%OUT%" %SRC%
 if errorlevel 1 (echo COMPILE FAILED & exit /b 1)
@@ -47,5 +51,11 @@ if /i "%~1"=="-runmath" (
 )
 if /i "%~1"=="-runwrapper" (
     "%JDK%\java.exe" -cp "%OUT%;%CP%" org.firstinspires.ftc.teamcode.wrapper.WrapperLogicTest
+)
+if /i "%~1"=="-runselftest" (
+    echo.
+    echo ---- running Pedro3LibSelfTest, S0-S3 only, no hardware ----
+    "%JDK%\java.exe" -cp "%OUT%;%CP%" org.firstinspires.ftc.teamcode.tests.Pedro3LibSelfTest
+    if errorlevel 1 (echo SELFTEST FAILED & exit /b 1)
 )
 endlocal
