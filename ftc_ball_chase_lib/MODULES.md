@@ -12,6 +12,7 @@ Jump to:
 - [`final/BallChaseFollower.java`](#ballchasefollower--pedro-auto-hybrid) — automated collect with Pedro
 - [`final/BallHunt.java`](#ballhunt--one-line-auto-wrapper) — one-line fluent wrapper
 - [`wrapper/BallWrangler.java`](#wrapperballwrangler--fluent-verb-api) — fluent verb API
+- [`pedro3/`](pedro3/) — beta port to Pedro Pathing 3.x + FTC SDK 12 (parallel copy; v2 above unchanged)
 
 ---
 

@@ -19,6 +19,24 @@ compile-check and all self-tests run against exactly the versions above.
 Tuning in a new SDK year on Pedro 3.x or different Limelight firmware may
 require touching `HiveConfig` only — the API surface is stable.
 
+### Pedro 3 (beta)
+
+[`pedro3/`](pedro3/) is a self-contained **beta port to Pedro Pathing 3.x +
+FTC SDK 12**, for testers who want to try the new pathing stack. It is a
+parallel copy — the 2.1.2 code in this folder is unchanged and still the
+supported path. Pick one folder; don't compile both (same package/class names).
+
+| Component | Tested version |
+|-----------|----------------|
+| FTC SDK (`RobotCore` / `Hardware`) | **12.0.0** |
+| Pedro Pathing (`revhub`) | **3.0.1** |
+
+Caveats: `pedro3/` was ported from the standalone example set, so it predates
+`HiveConfig`/`PickupConfirmer` and its own `compile_check.cmd` does not run the
+repo's `tests/` suite. All hardware constants in `pedro3/older/pedroPathing/Constants.java`
+are placeholders, and Pedro 3 changed the field coordinate convention — audit
+your poses before running on a field. Not recommended for competition use yet.
+
 New here? Start with the [5-minute quick start](../docs/quick_start.md) and the
 [calibration + coordinate conventions](../docs/calibration.md).
 
