@@ -89,11 +89,8 @@ Loop-driven users can instead `start()` / `update()` / `abort()` / `isDone()`.
 | Drive/turn/coast gains | `final/BallChaseController.java` / `final/BallChaseFollower.java` | All `public static`, tune in place or via a config system. |
 | `HFOV_DEG`/`VFOV_DEG`, pod/offset geometry | `final/BallChaseFollower.java` | Camera FOV and mount offsets for field projection. |
 
-## Handing this to a beta tester
-
-Don't tell them to copy this folder. The root-level `BallChaseOpMode.java` and
-`older/BallChaseOpMode.java` share an FQCN, so a straight copy of the tree is a
-duplicate-class error. Use the drop script instead:
+## Installation 
+Use the drop script:
 
 ```powershell
 .\install_beta.cmd  C:\path\to\their-FTC-project
