@@ -12,22 +12,16 @@
 
 ---
 
-## So, what is this?
+## What is Hive Vision?
 
-Hive Vision is a vision library for FTC that works with whatever camera you've got. A small group of students built it from scratch because we wanted ball tracking that's fast, accurate, and doesn't eat a whole weekend to set up.
+Ball tracking for FTC that works with the camera you already have. Built and tested by students and teams in the community.
 
-Right now it works with two cameras, and they do the job pretty differently.
+| Camera | How it works | Pick it if | Setup |
+| --- | --- | --- | --- |
+| **Limelight 3A** | A neural network runs on the camera's own processor | You want the steadiest tracking in matches | [Guide](https://hivevisionftc.github.io/HiveVisionDocs/installation/limelight/) |
+| **Webcam** | Colour thresholding on the Control Hub, no model | You want to try it today or prototype | [Guide](https://hivevisionftc.github.io/HiveVisionDocs/installation/webcam/) |
 
-**Limelight 3A.** A trained neural network runs on the camera's own processor, so the FTC SDK never gets in its way. It gives you the steadiest tracking.
-
-**Webcam.** Plain colour thresholding on the Control Hub, with no model and no TensorFlow. It's quicker to try, but colour thresholding tends to be fussier about lighting.
-
-**Not sure which one to pick?**
-
-- Choose the **Limelight 3A** if you want tracking you can count on in matches, or your events have tricky lighting.
-- Choose the **webcam** if you don't have a Limelight and just want to try Hive Vision today, or you're prototyping.
-
-If you have both, start with the Limelight.
+Have both? Start with the Limelight.
 
 ## See it work
 
@@ -38,31 +32,28 @@ If you have both, start with the Limelight.
   </tr>
   <tr>
     <td align="center" valign="top"><b>Neural detection</b><br>Pollen and nectar, found live</td>
-    <td align="center" valign="top"><b>Auto-chase</b><br>Limelight 3A TeleOp from 47 Beavers (13100)</td>
+    <td align="center" valign="top"><b>Auto-chase</b><br>Limelight 3A, by 47 Beavers (13100)</td>
   </tr>
   <tr>
     <td align="center" valign="top"><img src="assets/webcam-chase.gif" width="400" alt="Robot chasing a ball with a webcam"></td>
     <td align="center" valign="top"><img src="assets/pathing.gif" width="200" alt="Robot splining through detected balls"></td>
   </tr>
   <tr>
-    <td align="center" valign="top"><b>Webcam chase</b><br>Webcam TeleOp from Owen Cassidy (17113, Hunga Munga)</td>
-    <td align="center" valign="top"><b>Spline pathing</b><br>Limelight 3A + PedroPathing from Ajay Govindarajan (22297, Infinibots)</td>
+    <td align="center" valign="top"><b>Webcam chase</b><br>By Owen Cassidy (17113, Hunga Munga)</td>
+    <td align="center" valign="top"><b>Spline pathing</b><br>Limelight 3A + PedroPathing, by Ajay Govindarajan (22297, Infinibots)</td>
   </tr>
 </table>
 
-## Getting started
+## Get started
 
-Setup, usage, all of it lives in the docs: **[hivevisionftc.github.io/HiveVisionDocs](https://hivevisionftc.github.io/HiveVisionDocs/)**. Here's where to look:
+Everything lives in the [docs](https://hivevisionftc.github.io/HiveVisionDocs/).
 
-- **Brand new?** Start with the [overview](https://hivevisionftc.github.io/HiveVisionDocs/overview/overview/).
-- **Got a Limelight 3A?** Follow the [Limelight setup guide](https://hivevisionftc.github.io/HiveVisionDocs/installation/limelight/). You'll upload the model and labels file and you're basically done.
-- **Using a webcam?** Follow the [webcam setup guide](https://hivevisionftc.github.io/HiveVisionDocs/installation/webcam/).
-- **Want working code to learn from?** There are three example OpModes: [Limelight driving](https://hivevisionftc.github.io/HiveVisionDocs/reference/teleop), [Limelight pathing](https://hivevisionftc.github.io/HiveVisionDocs/reference/auto) and [webcam driving](https://hivevisionftc.github.io/HiveVisionDocs/reference/webcamteleop).
+- **New here?** Read the [overview](https://hivevisionftc.github.io/HiveVisionDocs/overview/overview/).
+- **Example OpModes:** [Limelight driving](https://hivevisionftc.github.io/HiveVisionDocs/reference/teleop) · [Limelight pathing](https://hivevisionftc.github.io/HiveVisionDocs/reference/auto) · [Webcam driving](https://hivevisionftc.github.io/HiveVisionDocs/reference/webcamteleop)
 - **Stuck?** Ask in the [Discord](https://discord.gg/m2yPTprccv).
 
-### Webcam in a few lines
-
-This is the whole idea on the webcam side:
+<details>
+<summary><b>Webcam code example</b></summary>
 
 ```java
 BallDetectorPipeline baller = new BallDetectorPipeline();
@@ -80,13 +71,13 @@ if (red != null) {
 }
 ```
 
-`bestOf(...)` gives you `null` when nothing of that colour passes the checks. If something does, you get a `BallBlob` with `cxNorm` and `cyNorm`, which are 0 to 1 and relative to the screen. The colours are `YELLOW`, `RED` and `BLUE`.
+`bestOf(...)` returns `null` when nothing of that colour passes the checks. Otherwise it returns a `BallBlob` with `cxNorm` and `cyNorm` (0 to 1, relative to the screen). Colours: `YELLOW`, `RED`, `BLUE`.
+
+</details>
 
 ---
 
-## The neural network
-
-The Limelight model looks for the three game elements:
+## The model
 
 ![yellow_pollen](https://img.shields.io/badge/yellow__pollen-class%200-FFD400?style=for-the-badge&labelColor=000000)
 ![red_nectar](https://img.shields.io/badge/red__nectar-class%201-E5242B?style=for-the-badge&labelColor=000000)
@@ -94,9 +85,12 @@ The Limelight model looks for the three game elements:
 
 <img src="assets/stats.svg" alt="Hive Vision v2: 97.3% precision, 18 to 21 ms per inference, 25 detections per frame, 14,409 labeled images" width="100%">
 
-v2 is fully 8-bit, which makes it about 6× faster than the old float build. That's what keeps the stream smooth on the 3A's CPU-only runtime. We also retrained it on a pile of hard negatives (field rig, wiring, signage, deep shadows, stuff off the field) so it stops seeing balls that aren't there. Class order and the FTC-side code haven't changed since v1, so upgrading is just swapping the file.
+v2 is fully 8-bit and about 6× faster than v1. It was trained on hard negatives like shadows, wiring and signage, so it sees fewer balls that aren't there. Class order and FTC-side code are unchanged from v1, so upgrading means swapping one file.
 
-### Model details
+> **Reading the raw outputs?** Only trust slots where `i < num_detections[0]`. Anything past that is uninitialized memory.
+
+<details>
+<summary><b>Model details</b></summary>
 
 | | |
 | --- | --- |
@@ -107,73 +101,61 @@ v2 is fully 8-bit, which makes it about 6× faster than the old float build. Tha
 | Max detections | 25 |
 | Size | 5.19 MB |
 
-**Why 25 detections?** The model keeps the top-N boxes after filtering by score. With N=10, a frame with 14 balls could only ever report 10, and it was the cap holding us back, not the network. 25 gives crowded scenes room, and sparse frames don't change (the average is about 4 per frame on our validation set).
+**Why 25 detections?** The model keeps the top-N boxes after score filtering. With N=10, a frame with 14 balls could only report 10. A cap of 25 gives crowded scenes room, and sparse frames don't change (about 4 detections per frame on average in validation).
 
-**Reading the raw outputs yourself?** Only trust slots where `i < num_detections[0]`. Anything past that is uninitialized memory and can be garbage.
+</details>
 
-### How we built it
+<details>
+<summary><b>How it was built</b></summary>
 
-We retrained SSD-MobileNetV2 (300×300) with the TensorFlow Object Detection API on a mix of synthetic and real ball images. That was 30,000 steps on an RTX 3000 Ada, with a class-weighted loss and baked-in NMS thresholds (score 0.3, IoU 0.6, 20 per class, 20 total). The final total loss was 0.1815, and precision came out at 97.3%.
+SSD-MobileNetV2 (300×300) was trained with the TensorFlow Object Detection API for 30,000 steps on an RTX 3000 Ada, using a class-weighted loss and baked-in NMS thresholds (score 0.3, IoU 0.6, 20 per class, 20 total). Final total loss was 0.1815, with 97.3% precision.
 
-From there we exported to a SavedModel, wrapped the input so it takes `uint8` directly, and converted to TFLite with full int8 quantization. For calibration we sampled 512 frames evenly across the whole training set. (An early version only used the first N sorted images, which was a bug, and we caught it.) Weights and activations are all 8-bit. Only the post-process outputs stay float32, because that's what the Limelight 3A's neural detector expects.
+It was then exported to a SavedModel with a native `uint8` input wrapper and converted to TFLite with full int8 quantization, calibrated on 512 frames sampled evenly across the training set. Weights and activations are 8-bit. Only the post-process outputs stay float32, which is what the Limelight 3A's neural detector expects.
 
-Before anything ships, we check the output shapes and value ranges, benchmark latency, and run the whole validation set against the previous model.
+Every release is checked with an output contract test, a latency benchmark, and a validation A/B against the previous model.
 
-### The data
+</details>
 
-14,409 labeled images, split into 11,895 for training and 2,514 for validation. It's a mix of synthetic CAD renders of the game balls, real match and arena footage, and hard-negative frames.
+<details>
+<summary><b>Dataset</b></summary>
 
-We also used two community datasets, and we're grateful for them:
+14,409 labeled images (11,895 train, 2,514 validation): synthetic CAD renders of the game balls, real match and arena footage, and hard-negative frames.
+
+Community datasets used:
 
 | Dataset | Author | License |
 | --- | --- | --- |
 | [FTC-BioBuzz](https://universe.roboflow.com/bluedarkup/ftc-biobuzz-6vjbl) | Bluedarkup on Roboflow | MIT |
 | [Chunc Pollen](https://universe.roboflow.com/arushs-workspace/chunc-pollen-l3rnm-wcueq) | Arush's Workspace on Roboflow | CC BY 4.0 |
 
----
+</details>
 
 ## Tested on real robots
-
-Teams have been running v2 on their own robots and sending back footage:
 
 | ProBotiX v2 testing | Arush v2 testing |
 | --- | --- |
 | ![ProBotiX v2 testing](https://github.com/hivevisionftc/Hive-Vision/raw/v2.0.0/releases/v2.0.0/probotix_v2_testing.gif) | ![Arush v2 testing](https://github.com/hivevisionftc/Hive-Vision/raw/v2.0.0/releases/v2.0.0/arush_v2_testing.gif) |
 | Recorded by Team 16765 ProBotiX | Recorded by Arush, FTC 23511 |
 
-## What's changed
+## What's new
 
-- **[v2.0.0](https://github.com/hivevisionftc/Hive-Vision/releases/tag/v2.0.0):** up to 25 detections per frame, full int8 (about 6× faster), a bigger and harder dataset, and 97.3% precision. Coming from v1? Class order and FTC-side decoding are the same, so no code changes.
-- **[v1.1.0](https://github.com/hivevisionftc/Hive-Vision/releases/tag/v1.1.0):** retrained on about 10,000 images. Shadows and off-field objects no longer get detected as game elements.
+- **[v2.0.0](https://github.com/hivevisionftc/Hive-Vision/releases/tag/v2.0.0):** up to 25 detections per frame, full int8 (about 6× faster), a bigger and harder dataset, 97.3% precision. No code changes needed from v1.
+- **[v1.1.0](https://github.com/hivevisionftc/Hive-Vision/releases/tag/v1.1.0):** retrained on about 10,000 images. Shadows and off-field objects are no longer detected as game elements.
 
-## Who's behind it
+## Team
 
-Hive Vision is entirely community built. It was started by **[Harjas Sidhu](https://github.com/sidhuharjas)**, the founder and lead developer, and **[Sid Shah](https://github.com/KnowPa1n)** is a co-developer.
+Hive Vision was started by **[Harjas Sidhu](https://github.com/sidhuharjas)**, the founder and lead developer. **[Sid Shah](https://github.com/KnowPa1n)** is a co-developer.
 
-None of this works without the teams who tested it and told us where it broke. The false-positive reports from the field are exactly why v1.1 and v2 exist. Thank you to **Arush** (23511a), **Ajay Govindarajan** (22297), **47 Beavers** (13100), **Owen Cassidy** (17113), **ProBotiX** (16765), **Javi Nashat** (23286) and **Jasper Wolves Blue** (11419).
+Thanks to the teams who tested it: **Arush** (23511a), **Ajay Govindarajan** (22297), **47 Beavers** (13100), **Owen Cassidy** (17113), **ProBotiX** (16765), **Javi Nashat** (23286) and **Jasper Wolves Blue** (11419). Their field reports are the reason v1.1 and v2 exist.
 
 ## Community
 
-Join the [Hive Vision Discord](https://discord.gg/m2yPTprccv) to share robot tests, training data, detector results and setup questions. If you've found a bug, have a suggestion, or want to contribute a dataset, you can also [open an issue on GitHub](https://github.com/hivevisionftc/Hive-Vision/issues).
+Join the [Discord](https://discord.gg/m2yPTprccv) to share robot tests, training data, detector results and setup questions. Bugs, suggestions and dataset contributions can go in a [GitHub issue](https://github.com/hivevisionftc/Hive-Vision/issues).
 
-### Updates
-
-We'll keep updating Hive Vision all season. The plan is a release or model update about every other week, as new real footage, field conditions, camera angles and tricky examples come in. An update might include refreshed SSD-MobileNetV2 weights, better OpenCV HSV settings, new evaluation results, or new demo samples.
-
-### Help us train it
-
-Real footage is the best thing you can send us. To contribute, join the Discord and share a link in the training-data discussion. Please include:
-
-- where the footage came from
-- the camera resolution and frame rate
-- the lighting conditions
-- confirmation that we're allowed to use it
-
-The [training data guide](docs/training_data.md) covers what's most useful to send and exactly how we review it. If you'd like to contribute code instead, start with [CONTRIBUTING.md](CONTRIBUTING.md).
-
-### Contributor certificates
-
-If we accept your training data or testing work, you can ask us for a certificate recognizing your contribution. It can describe work like real-robot data collection, labeling, hard-negative mining, evaluation, or detector testing, and you're welcome to use it in a portfolio or resume. Ask through a GitHub issue or the Discord. The certificate will describe your specific contribution, and it won't suggest you wrote the whole project.
+- **Updates:** a release or model update is planned about every other week all season, with new weights, HSV settings, eval results and demo samples.
+- **Training data:** share a link in the Discord's training-data discussion, with the source, camera resolution, frame rate, lighting and permission to use it. See the [training data guide](docs/training_data.md).
+- **Code:** see [CONTRIBUTING.md](CONTRIBUTING.md).
+- **Certificates:** contributors whose data or testing work is accepted can request a certificate for their specific contribution, such as data collection, labeling, evaluation or detector testing. It's fine for a portfolio or resume, and it doesn't imply authorship of the whole project. Ask in an issue or the Discord.
 
 ## License
 

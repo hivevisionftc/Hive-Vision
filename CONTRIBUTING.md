@@ -2,7 +2,7 @@
 
 # Contributing to Hive Vision
 
-Thanks for helping out. There are two kinds of contributions we really need: detector and model data, and code.
+Thanks for helping out. Two kinds of contributions help most: detector and model data, and code.
 
 Data has its own workflow, so see the [training data guide](docs/training_data.md). This page is about code. If you have questions before you start, [join the Discord](https://discord.gg/m2yPTprccv).
 
@@ -10,7 +10,7 @@ Data has its own workflow, so see the [training data guide](docs/training_data.m
 
 Hive Vision is a model-plus-advice project. It ships published reference weights (the Limelight 3A SSD-MobileNetV2 TFLite), Control Hub OpenCV pipelines, and the FTC-side `ftc_ball_chase_lib`.
 
-We keep the API small on purpose. Before you open a PR, tell us what problem it solves, whether that's the tracker, the docs, or the robot libraries.
+The API is small on purpose. Before opening a PR, say what problem it solves, whether that's the tracker, the docs, or the robot libraries.
 
 ## Setting up
 
