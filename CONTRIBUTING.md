@@ -1,59 +1,54 @@
+[Docs](https://hivevisionftc.github.io/HiveVisionDocs/) · [Join the Discord](https://discord.gg/m2yPTprccv) · [Back to the README](README.md)
+
 # Contributing to Hive Vision
 
-Thanks for helping. Two kinds of contributions are most useful: detector/model
-data and code. Data submission has its own workflow — see
-[Training-data workflow](docs/training_data.md). This page covers code.
+Thanks for helping out. There are two kinds of contributions we really need: detector and model data, and code.
+
+Data has its own workflow, so see the [training data guide](docs/training_data.md). This page is about code. If you have questions before you start, [join the Discord](https://discord.gg/m2yPTprccv).
 
 ## Scope
 
-Hive Vision is a model-plus-advice project: published reference weights
-(Limelight 3A SSD-MobileNetV2 TFLite), Control Hub OpenCV pipelines,
-and the FTC-side `ftc_ball_chase_lib`. The API is small
-by design. Before opening a PR, say what problem it solves — the tracker,
-the docs, or the robot libraries.
+Hive Vision is a model-plus-advice project. It ships published reference weights (the Limelight 3A SSD-MobileNetV2 TFLite), Control Hub OpenCV pipelines, and the FTC-side `ftc_ball_chase_lib`.
+
+We keep the API small on purpose. Before you open a PR, tell us what problem it solves, whether that's the tracker, the docs, or the robot libraries.
 
 ## Setting up
 
-```bash
-pip install -r requirements.txt        # PC tooling (Python 3.10+)
+For the PC tooling you'll need Python 3.10 or newer:
+
+```
+pip install -r requirements.txt
 ```
 
-The FTC-side library is standalone — no Python needed. Build/test it with the
-laptop self-test:
+The FTC-side library is standalone, so you don't need Python for it. Build and test it with the laptop self-test:
 
-```cmd
+```
 cd ftc_ball_chase_lib
-\.compile_check.cmd -runall
+.\compile_check.cmd -runall
 ```
 
 ## What a good PR looks like
 
-- **One logical change per PR.** Fix the docs and the code in the same PR
-  when they are coupled (e.g. a new class field with its reference entry).
-- **Run the eval before and after** any detector or config change:
-  `python cv/tools/eval_cv_vs_yolo.py` — see [README](README.md) for the
-  exact commands. Report the numbers in the PR body. (The Lab track eval was
-  retired with the track in 2026-10; its tools live in `archive/lab/`.)
-- **Never re-order shipped class IDs or labels.** `yellow`, `red`, `blue`
-  class order is load-bearing across the Limelight labels and the Control Hub
-  pipelines.
-- **Keep the performance table in README in sync** with any measured change.
-  The numbers are candidate-level detector benchmarks, not robot results;
-  keep the caveats with them.
-- **Docs reorganize, don't prune.** When reworking a page, merge content
-  rather than deleting it.
+- **One logical change per PR.** If the docs and the code are coupled, like a new class field and its reference entry, change them together.
+- **Run the eval before and after** any detector or config change, and put the numbers in the PR description:
+
+  ```
+  python cv/tools/eval_cv_vs_yolo.py
+  ```
+
+  The [README](https://github.com/hivevisionftc/Hive-Vision/blob/main/README.md) has the exact commands. (The Lab track eval was retired along with the track in 2026-10. Its tools live in `archive/lab/`.)
+- **Never reorder shipped class IDs or labels.** The `yellow`, `red`, `blue` order matters everywhere: the Limelight labels and the Control Hub pipelines both depend on it.
+- **Keep the performance table in the README in sync** with any measured change. Those numbers are candidate-level detector benchmarks, not robot results, so keep the caveats next to them.
+- **Reorganize docs, don't prune them.** When you rework a page, merge the content instead of deleting it.
 
 ## Testing
 
-- Pure-documentation PRs need no test run.
-- Library changes: `\.compile_check.cmd -runall` (all tests must pass).
-- Detector/tooling changes: run the relevant eval script on a short clip and
-  paste the output. CI runs the eval smoke check on every PR — it fails on
-  tooling regressions and prints the metrics for review.
+- Docs-only PRs don't need a test run.
+- For library changes, run `.\compile_check.cmd -runall`. All tests must pass.
+- For detector or tooling changes, run the relevant eval script on a short clip and paste the output. CI also runs an eval smoke check on every PR. It fails on tooling regressions and prints the metrics for review.
 
 ## Licensing
 
-MIT for code, docs, and configuration. The archived YOLO model artifacts in
-`archive/yolo-pc/` and Ultralytics-dependent material are AGPL-3.0 — see
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). By contributing you agree to
-release your contribution under those terms.
+Code, docs and configuration are MIT. The archived YOLO model artifacts in `archive/yolo-pc/` and any Ultralytics-dependent material are AGPL-3.0. See [THIRD_PARTY_NOTICES.md](https://github.com/hivevisionftc/Hive-Vision/blob/main/THIRD_PARTY_NOTICES.md).
+
+By contributing, you agree to release your contribution under those terms.
