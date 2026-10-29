@@ -6,4 +6,4 @@ Hive Vision is updated throughout the season, with a planned release or model up
 * [v1.1.0 release notes](release_notes_v1.1.0.md)
 * [v1.0.0 release notes](release_notes_v1.0.0.md)
 
-To contribute training data or share test results, join the [Hive Vision Discord server](https://discord.gg/m2yPTprccv) or [open an issue on GitHub](https://github.com/sidhuharjas/Hive-Vision/issues).
+To contribute training data or share test results, join the [Hive Vision Discord server](https://discord.gg/jfj54TUmPT) or [open an issue on GitHub](https://github.com/sidhuharjas/Hive-Vision/issues).

@@ -43,7 +43,7 @@ https://www.youtube.com/watch?v=gO98TkgY0kI
 
 ## Community and contributions
 
-Share robot tests, detector results, and training data through the [Hive Vision Discord server](https://discord.gg/m2yPTprccv) or [GitHub Issues](https://github.com/sidhuharjas/Hive-Vision/issues).
+Share robot tests, detector results, and training data through the [Hive Vision Discord server](https://discord.gg/jfj54TUmPT) or [GitHub Issues](https://github.com/sidhuharjas/Hive-Vision/issues).
 
 Useful training data includes empty-field and real-robot footage, 360-degree field views, varied ball distances and angles, motion blur, partial occlusion, and hard negatives such as panels, tape, shadows, and reflections.
 

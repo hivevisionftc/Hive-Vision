@@ -1,10 +1,10 @@
-[Docs](https://hivevisionftc.github.io/HiveVisionDocs/) · [Join the Discord](https://discord.gg/m2yPTprccv) · [Back to the README](../README.md)
+[Docs](https://hivevisionftc.github.io/HiveVisionDocs/) · [Join the Discord](https://discord.gg/jfj54TUmPT) · [Back to the README](../README.md)
 
 # Training data
 
 Real footage is the best way to make Hive Vision better. Every field, camera angle and lighting setup shows the model something new, and the false positives you catch are exactly what it gets trained against.
 
-Share your data in the training-data discussion on the [Discord](https://discord.gg/m2yPTprccv), or in a [GitHub issue](https://github.com/hivevisionftc/Hive-Vision/issues).
+Share your data in the training-data discussion on the [Discord](https://discord.gg/jfj54TUmPT), or in a [GitHub issue](https://github.com/hivevisionftc/Hive-Vision/issues).
 
 ## What helps most
 

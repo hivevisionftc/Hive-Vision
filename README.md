@@ -1,9 +1,9 @@
 <div align="center">
 
-**[Read the docs](https://hivevisionftc.github.io/HiveVisionDocs/)** · **[Join the Discord](https://discord.gg/m2yPTprccv)**
+**[Read the docs](https://hivevisionftc.github.io/HiveVisionDocs/)** · **[Join the Discord](https://discord.gg/jfj54TUmPT)**
 
 [![Docs](https://img.shields.io/badge/DOCS-hivevisionftc.github.io-F2F2F2?style=for-the-badge&labelColor=222222)](https://hivevisionftc.github.io/HiveVisionDocs/)
-[![Join the Discord](https://img.shields.io/badge/DISCORD-join%20the%20server-F2F2F2?style=for-the-badge&labelColor=222222&logo=discord&logoColor=white)](https://discord.gg/m2yPTprccv)
+[![Join the Discord](https://img.shields.io/badge/DISCORD-join%20the%20server-F2F2F2?style=for-the-badge&labelColor=222222&logo=discord&logoColor=white)](https://discord.gg/jfj54TUmPT)
 [![Latest release](https://img.shields.io/github/v/release/hivevisionftc/Hive-Vision?style=for-the-badge&color=F2F2F2&labelColor=222222)](https://github.com/hivevisionftc/Hive-Vision/releases/latest)
 
 <img src="assets/banner.svg" alt="Hive Vision: computer vision for FIRST Tech Challenge, at your camera of choice" width="100%">
@@ -50,7 +50,7 @@ Everything lives in the [docs](https://hivevisionftc.github.io/HiveVisionDocs/).
 
 - **New here?** Read the [overview](https://hivevisionftc.github.io/HiveVisionDocs/overview/overview/).
 - **Example OpModes:** [Limelight driving](https://hivevisionftc.github.io/HiveVisionDocs/reference/teleop) · [Limelight pathing](https://hivevisionftc.github.io/HiveVisionDocs/reference/auto) · [Webcam driving](https://hivevisionftc.github.io/HiveVisionDocs/reference/webcamteleop)
-- **Stuck?** Ask in the [Discord](https://discord.gg/m2yPTprccv).
+- **Stuck?** Ask in the [Discord](https://discord.gg/jfj54TUmPT).
 
 <details>
 <summary><b>Webcam code example</b></summary>
@@ -150,7 +150,7 @@ Thanks to the teams who tested it: **Arush** (23511a), **Ajay Govindarajan** (22
 
 ## Community
 
-Join the [Discord](https://discord.gg/m2yPTprccv) to share robot tests, training data, detector results and setup questions. Bugs, suggestions and dataset contributions can go in a [GitHub issue](https://github.com/hivevisionftc/Hive-Vision/issues).
+Join the [Discord](https://discord.gg/jfj54TUmPT) to share robot tests, training data, detector results and setup questions. Bugs, suggestions and dataset contributions can go in a [GitHub issue](https://github.com/hivevisionftc/Hive-Vision/issues).
 
 - **Updates:** a release or model update is planned about every other week all season, with new weights, HSV settings, eval results and demo samples.
 - **Training data:** share a link in the Discord's training-data discussion, with the source, camera resolution, frame rate, lighting and permission to use it. See the [training data guide](docs/training_data.md).

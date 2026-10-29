@@ -1,10 +1,10 @@
-[Docs](https://hivevisionftc.github.io/HiveVisionDocs/) · [Join the Discord](https://discord.gg/m2yPTprccv) · [Back to the README](README.md)
+[Docs](https://hivevisionftc.github.io/HiveVisionDocs/) · [Join the Discord](https://discord.gg/jfj54TUmPT) · [Back to the README](README.md)
 
 # Contributing to Hive Vision
 
 Thanks for helping out. Two kinds of contributions help most: detector and model data, and code.
 
-Data has its own workflow, so see the [training data guide](docs/training_data.md). This page is about code. If you have questions before you start, [join the Discord](https://discord.gg/m2yPTprccv).
+Data has its own workflow, so see the [training data guide](docs/training_data.md). This page is about code. If you have questions before you start, [join the Discord](https://discord.gg/jfj54TUmPT).
 
 ## Scope
 
