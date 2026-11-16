@@ -6,7 +6,6 @@
 [![Join the Discord](https://img.shields.io/badge/DISCORD-join%20the%20server-F2F2F2?style=for-the-badge&labelColor=222222&logo=discord&logoColor=white)](https://discord.gg/jfj54TUmPT)
 [![Latest release](https://img.shields.io/github/v/release/hivevisionftc/Hive-Vision?style=for-the-badge&color=F2F2F2&labelColor=222222)](https://github.com/hivevisionftc/Hive-Vision/releases/latest)
 
-<img src="assets/banner.svg" alt="Hive Vision: computer vision for FIRST Tech Challenge, at your camera of choice" width="100%">
 
 </div>
 
